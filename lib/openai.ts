@@ -61,7 +61,7 @@ JSON schema:
 ${JSON.stringify(membraneAnalysisJsonSchema)}`;
 
   const response = await client.responses.create({
-    model: process.env.OPENAI_MODEL ?? "gpt-5-mini",
+    model: process.env.OPENAI_MODEL ?? "gpt-5-nano",
     input: [
       { role: "system", content: systemPrompt },
       { role: "user", content: prompt }
@@ -82,7 +82,7 @@ export async function reviseGateWithOpenAI(args: {
   }
 
   const response = await client.responses.create({
-    model: process.env.OPENAI_MODEL ?? "gpt-5-mini",
+    model: process.env.OPENAI_MODEL ?? "gpt-5-nano",
     input: [
       { role: "system", content: systemPrompt },
       {

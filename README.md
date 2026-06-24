@@ -20,7 +20,7 @@ Create `.env.local` from `.env.example` and paste your key manually:
 
 ```bash
 OPENAI_API_KEY=sk-proj-...
-OPENAI_MODEL=gpt-5-mini
+OPENAI_MODEL=gpt-5-nano
 ```
 
 The app still runs without an API key by using fixture analysis data.
