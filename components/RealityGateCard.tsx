@@ -1,46 +1,47 @@
-import { ShieldAlert } from "lucide-react";
+import { CalendarDays, CircleCheck, CircleDollarSign, CircleX, MapPin, Star, UserRound } from "lucide-react";
 import type { MembraneAnalysis } from "@/types/membrane";
 
 const recommendationText = {
   pass: "通す",
   stop: "止める",
-  conditional: "条件付き"
+  conditional: "条件付きで通す"
 };
 
-export function RealityGateCard({ analysis }: { analysis: MembraneAnalysis }) {
+export function RealityGateCard({
+  analysis,
+  compact = false
+}: {
+  analysis: MembraneAnalysis;
+  compact?: boolean;
+}) {
   const gate = analysis.realityGate;
+  const rows = [
+    { icon: UserRound, text: "From: B社" },
+    { icon: Star, text: `推奨: ${recommendationText[gate.recommendation]}` },
+    { icon: CalendarDays, text: "日時: 2026/07/01 15:00-16:00" },
+    { icon: MapPin, text: "場所: 京都市内" },
+    { icon: CircleDollarSign, text: "謝礼: 30万円" },
+    { icon: CircleCheck, text: "共有OK: 空き時間 / 公開可能肩書き / 登壇可否" },
+    { icon: CircleX, text: "共有NG: 予定名 / 前後の私的予定 / 同行者情報" }
+  ];
 
   return (
-    <article className="relative mx-auto flex min-h-[380px] w-full max-w-[390px] flex-col justify-between overflow-hidden rounded-[28px] border border-white/16 bg-[#f7f0e6] p-5 text-[#171717] shadow-2xl shadow-black/35">
-      <div className="absolute right-5 top-5 rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs font-semibold">
-        {recommendationText[gate.recommendation]}
-      </div>
+    <article className={`relative mx-auto w-full max-w-[330px] px-2 text-center ${compact ? "scale-[0.82]" : ""}`}>
+      <div className="pointer-events-none absolute inset-x-5 top-8 h-48 rounded-full bg-cyan-100/12 blur-3xl" />
 
-      <div className="space-y-5">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#171717] text-white">
-          <ShieldAlert size={23} />
-        </div>
+      <div className="relative mx-auto overflow-hidden rounded-[30px] border border-cyan-100/12 bg-cyan-100/[0.035] px-5 py-5 shadow-[0_0_72px_rgba(165,255,236,0.10)] backdrop-blur-xl">
+        <div className="pointer-events-none absolute inset-x-12 top-24 h-px bg-cyan-100/40 shadow-[0_0_18px_rgba(165,255,236,0.8)]" />
 
-        <div className="space-y-2 pr-16">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#8c4b27]">
-            Reality Gate
-          </p>
-          <h2 className="text-3xl font-semibold leading-tight">{gate.title}</h2>
-        </div>
+        <h2 className="text-[2rem] font-light tracking-[0.18em] text-white/95">登壇依頼</h2>
 
-        <p className="text-base leading-7 text-[#3c3a36]">{gate.summary}</p>
-      </div>
-
-      <div className="space-y-4">
-        <div className="grid gap-2">
-          {gate.conditions.slice(0, 4).map((condition) => (
-            <div key={condition} className="rounded-2xl border border-black/8 bg-white/62 px-3 py-2 text-sm">
-              {condition}
+        <div className="mt-5 divide-y divide-cyan-100/10 text-left">
+          {rows.map(({ icon: Icon, text }) => (
+            <div key={text} className="flex items-center gap-4 py-2.5">
+              <Icon className="h-4 w-4 shrink-0 text-cyan-200/78" strokeWidth={1.7} />
+              <p className="text-[0.78rem] leading-5 tracking-[0.08em] text-white/86">{text}</p>
             </div>
           ))}
         </div>
-
-        <p className="rounded-2xl bg-[#171717] p-3 text-sm leading-6 text-white">{gate.returnPreview}</p>
       </div>
     </article>
   );
